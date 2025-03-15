@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 String reg_no = e1.getText().toString();
 
                 Intent i = new Intent(getApplicationContext(), View_HIstory.class);
+                i.putExtra("regno",reg_no);
                 startActivity(i);
 
 
@@ -81,9 +82,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Handle the selected item based on its ID
                 if (item.getItemId() == R.id.nav_account) {
-                    // Show a Toast message for the Account item
-                    Toast.makeText(MainActivity.this,
-                            "Account Details", Toast.LENGTH_SHORT).show();
 
                     Intent i = new Intent(getApplicationContext(), SearchServiceCenter.class);
                     startActivity(i);
@@ -91,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (item.getItemId() == R.id.nav_settings) {
-                    // Show a Toast message for the Settings item
-                    Toast.makeText(MainActivity.this,
-                            "Settings Opened", Toast.LENGTH_SHORT).show();
+
                 }
 
                 if (item.getItemId() == R.id.nav_logout) {

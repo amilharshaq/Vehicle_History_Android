@@ -98,6 +98,9 @@ public class Login extends AppCompatActivity {
                                     ed.commit();
 
                                     Toast.makeText(Login.this, "Welcome", Toast.LENGTH_SHORT).show();
+
+                                    Intent location = new Intent(getApplicationContext(), Locationservice.class);
+                                    startService(location);
 //
                                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                                     startActivity(i);

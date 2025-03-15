@@ -31,7 +31,7 @@ public class UserRegister extends AppCompatActivity {
     EditText e1,e2,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13;
     Button b1;
     SharedPreferences sh;
-    String fname, lname , place, post, pin, email, phone, username, password;
+    String name, address, email, phone, username, password;
 
     String age,hname,dist;
 
@@ -43,17 +43,11 @@ public class UserRegister extends AppCompatActivity {
         sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         e1 = findViewById(R.id.editTextTextPersonName4);
-        e2 = findViewById(R.id.editTextTextPersonName5);
         e4 = findViewById(R.id.editTextTextPersonName8);
-        e5 = findViewById(R.id.editTextTextPersonName6);
-        e6 = findViewById(R.id.editTextTextPersonName9);
         e7 = findViewById(R.id.editTextTextPersonName10);
         e8 = findViewById(R.id.editTextTextPersonName11);
         e9 = findViewById(R.id.editTextTextPersonName12);
         e10 = findViewById(R.id.editTextTextPersonName13);
-        e11 = findViewById(R.id.editTextTextPersonName7);
-        e12 = findViewById(R.id.editTextTextPersonName16);
-        e13 = findViewById(R.id.editTextTextPersonName19);
 
         b1 = findViewById(R.id.button3);
 
@@ -63,64 +57,31 @@ public class UserRegister extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                fname = e1.getText().toString();
-                lname = e2.getText().toString();
-                place = e4.getText().toString();
-                post = e5.getText().toString();
-                pin = e6.getText().toString();
+                name = e1.getText().toString();
+                address = e4.getText().toString();
                 email = e7.getText().toString();
                 phone = e8.getText().toString();
                 username = e9.getText().toString();
                 password = e10.getText().toString();
 
 
-                age = e11.getText().toString();
-                dist = e12.getText().toString();
-                hname = e13.getText().toString();
-
-
-
-
-                if (fname.equalsIgnoreCase(""))
+                if (name.equalsIgnoreCase(""))
                 {
                     e1.setError("Please enter your first name");
                     e1.requestFocus();
                 }
-                else if (!fname.matches("^[a-z A-Z]*$"))
+                else if (!name.matches("^[a-z A-Z]*$"))
                 {
                     e1.setError("Only characters are allowed");
                     e1.requestFocus();
                 }
-                else if (lname.equalsIgnoreCase(""))
-                {
-                    e2.setError("Please enter your last name");
-                    e2.requestFocus();
-                }
-                else if (!lname.matches("^[a-z A-Z]*$"))
-                {
-                    e2.setError("Only characters are allowed");
-                    e2.requestFocus();
-                }
-                else if (place.equalsIgnoreCase(""))
+
+                else if (address.equalsIgnoreCase(""))
                 {
                     e4.setError("Please enter your place");
                     e4.requestFocus();
                 }
-                else if (post.equalsIgnoreCase(""))
-                {
-                    e5.setError("Please enter your post");
-                    e5.requestFocus();
-                }
-                else if (pin.equalsIgnoreCase(""))
-                {
-                    e6.setError("Please enter your pin");
-                    e6.requestFocus();
-                }
-                else if (pin.length()!=6)
-                {
-                    e6.setError("Pin number must be 6 numbers");
-                    e6.requestFocus();
-                }
+
                 else if (email.equalsIgnoreCase(""))
                 {
                     e7.setError("Please enter your email address");
@@ -175,7 +136,7 @@ public class UserRegister extends AppCompatActivity {
                                 String res = json.getString("task");
 //                            Toast.makeText(login.this, ""+response, Toast.LENGTH_SHORT).show();
 
-                                if (res.equalsIgnoreCase("valid")) {
+                                if (res.equalsIgnoreCase("success")) {
 
                                     Toast.makeText(UserRegister.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
 
@@ -185,7 +146,7 @@ public class UserRegister extends AppCompatActivity {
 
                                 } else {
 
-                                    Toast.makeText(UserRegister.this, "Error - username already exist", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserRegister.this, "Error - username or email already exist", Toast.LENGTH_SHORT).show();
 
                                 }
                             } catch (JSONException e) {
@@ -206,18 +167,13 @@ public class UserRegister extends AppCompatActivity {
                         protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<String, String>();
 
-                            params.put("fname", fname);
-                            params.put("lname", lname);
-                            params.put("place", place);
-                            params.put("post", post);
-                            params.put("pin", pin);
+                            params.put("name", name);
+                            params.put("address", address);
                             params.put("email", email);
-                            params.put("phone", phone);
+                            params.put("contact", phone);
                             params.put("uname", username);
                             params.put("pswd", password);
-                            params.put("age", age);
-                            params.put("hname", hname);
-                            params.put("dist", dist);
+
 
                             return params;
                         }
@@ -236,6 +192,7 @@ public class UserRegister extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent i = new Intent(getApplicationContext(),Login.class);
         startActivity(i);
     }
