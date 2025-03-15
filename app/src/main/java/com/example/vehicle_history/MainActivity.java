@@ -10,6 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -20,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+
+    EditText e1;
+    Button b1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Synchronize the toggle's state with the linked DrawerLayout
         toggle.syncState();
+
+
+
+
+
+        e1 = findViewById(R.id.editTextText);
+        b1 = findViewById(R.id.button4);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String reg_no = e1.getText().toString();
+
+                Intent i = new Intent(getApplicationContext(), View_HIstory.class);
+                startActivity(i);
+
+
+            }
+        });
+
+
+
+
 
         // Set a listener for when an item in the NavigationView is selected
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -77,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 // Indicate that the item selection has been handled
                 return true;
             }
+
+
         });
 
         // Add a callback to handle the back button press
