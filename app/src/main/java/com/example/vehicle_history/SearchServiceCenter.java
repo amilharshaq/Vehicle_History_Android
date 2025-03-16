@@ -1,6 +1,7 @@
 package com.example.vehicle_history;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,7 +37,7 @@ public class SearchServiceCenter extends AppCompatActivity implements AdapterVie
     ListView l1;
     SharedPreferences sh;
 
-    ArrayList<String> name, address, email, phone, latitude, longitude;
+    ArrayList<String> name, address, email, phone, latitude, longitude, id;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -81,6 +82,7 @@ public class SearchServiceCenter extends AppCompatActivity implements AdapterVie
                     phone = new ArrayList<>();
                     latitude = new ArrayList<>();
                     longitude = new ArrayList<>();
+                    id = new ArrayList<>();
 
                     for (int i = 0; i < ar.length(); i++) {
                         JSONObject jo = ar.getJSONObject(i);
@@ -90,11 +92,14 @@ public class SearchServiceCenter extends AppCompatActivity implements AdapterVie
                         phone.add(jo.getString("phone"));
                         latitude.add(jo.getString("lati"));
                         longitude.add(jo.getString("longi"));
+                        id.add(jo.getString("lid"));
                     }
 
                     // Set data into ListView using ArrayAdapter
                     ArrayAdapter<String> ad = new ArrayAdapter<>(SearchServiceCenter.this, android.R.layout.simple_list_item_1, name);
-                    l1.setAdapter(ad);
+//                    l1.setAdapter(ad);
+
+                    l1.setAdapter(new Custom3(SearchServiceCenter.this,name,address,phone));
 
                 } catch (Exception e) {
                     Log.e("JSONError", e.toString());
@@ -113,6 +118,7 @@ public class SearchServiceCenter extends AppCompatActivity implements AdapterVie
                 Map<String, String> params = new HashMap<>();
                 params.put("lati",Locationservice.lati); // Ensure this key matches backend
                 params.put("longi",Locationservice.logi); // Ensure this key matches backend
+
                 return params;
             }
         };
@@ -124,6 +130,10 @@ public class SearchServiceCenter extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+      Intent ik = new Intent(getApplicationContext(), ProceedToBooking.class);
+      ik.putExtra("sid", id.get(i));
+      startActivity(ik);
 
     }
 }

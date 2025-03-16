@@ -18,8 +18,14 @@
         android:theme="@style/Theme.Vehicle_History"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ViewBookings"
+            android:exported="false" />
+        <activity
+            android:name=".ProceedToBooking"
+            android:exported="false" />
 
-        <service android:name=".Locationservice"></service>
+        <service android:name=".Locationservice" />
 
         <activity
             android:name=".ViewFullHistory"
