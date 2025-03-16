@@ -90,10 +90,18 @@ public class MainActivity extends AppCompatActivity {
 
                 if (item.getItemId() == R.id.nav_settings) {
 
+                    Intent i = new Intent(getApplicationContext(), ViewBookings.class);
+                    startActivity(i);
+
+
                 }
 
                 if (item.getItemId() == R.id.nav_logout) {
                     // Show a Toast message for the Logout item
+
+                    Intent i = new Intent(getApplicationContext(), ip.class);
+                    startActivity(i);
+
                     Toast.makeText(MainActivity.this,
                             "You are Logged Out", Toast.LENGTH_SHORT).show();
                 }
