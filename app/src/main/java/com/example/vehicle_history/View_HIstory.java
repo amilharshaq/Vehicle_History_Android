@@ -35,7 +35,7 @@ public class View_HIstory extends AppCompatActivity implements AdapterView.OnIte
 
     ListView l1;
     SharedPreferences sh;
-    ArrayList<String> details,date, amount;
+    ArrayList<String> details, date, amount, vtype, sid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,11 @@ public class View_HIstory extends AppCompatActivity implements AdapterView.OnIte
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        SharedPreferences.Editor ed = sh.edit();
+        ed.putString("regno", getIntent().getStringExtra("regno"));
+        ed.commit();
 
         // Call function to fetch history data
         fetchHistoryData();
@@ -74,12 +79,16 @@ public class View_HIstory extends AppCompatActivity implements AdapterView.OnIte
                     details = new ArrayList<>();
                     date = new ArrayList<>();
                     amount = new ArrayList<>();
+                    vtype = new ArrayList<>();
+                    sid = new ArrayList<>();
 
                     for (int i = 0; i < ar.length(); i++) {
                         JSONObject jo = ar.getJSONObject(i);
                         details.add(jo.getString("details"));
                         date.add(jo.getString("date"));
                         amount.add(jo.getString("cost"));
+                        vtype.add(jo.getString("vtype"));
+                        sid.add(jo.getString("sid"));
                     }
 
                     // Set data into ListView using ArrayAdapter
@@ -114,11 +123,19 @@ public class View_HIstory extends AppCompatActivity implements AdapterView.OnIte
         String det = details.get(position);
         String cost = amount.get(position);
         String date2 = date.get(position);
+        String veh_type = vtype.get(position);
+        String service_center = sid.get(position);
+
+        SharedPreferences.Editor ed = sh.edit();
+        ed.putString("sid", service_center);
+        ed.commit();
 
         Intent i = new Intent(getApplicationContext(), ViewFullHistory.class);
         i.putExtra("date", date2);
         i.putExtra("details", det);
         i.putExtra("cost", cost);
+        i.putExtra("vtyep", veh_type);
+        i.putExtra("sid", service_center);
         startActivity(i);
 
     }
