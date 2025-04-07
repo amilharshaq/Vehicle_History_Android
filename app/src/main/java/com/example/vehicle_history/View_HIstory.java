@@ -134,7 +134,7 @@ public class View_HIstory extends AppCompatActivity implements AdapterView.OnIte
         i.putExtra("date", date2);
         i.putExtra("details", det);
         i.putExtra("cost", cost);
-        i.putExtra("vtyep", veh_type);
+        i.putExtra("vtype", veh_type);
         i.putExtra("sid", service_center);
         startActivity(i);
 
