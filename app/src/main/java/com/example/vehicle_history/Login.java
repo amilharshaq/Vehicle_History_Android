@@ -156,28 +156,9 @@ public class Login extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        AlertDialog.Builder ald = new AlertDialog.Builder(Login.this);
-        ald.setTitle("Do you want to exit ?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent in = new Intent(Intent.ACTION_MAIN);
-                        in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        in.addCategory(Intent.CATEGORY_HOME);
-                        startActivity(in);
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
 
-
-
-                    }
-                });
-
-        AlertDialog al = ald.create();
-        al.show();;
+        Intent i = new Intent(getApplicationContext(), ip.class);
+        startActivity(i);
     }
 
 }

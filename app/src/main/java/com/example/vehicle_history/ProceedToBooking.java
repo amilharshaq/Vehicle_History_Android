@@ -86,76 +86,90 @@ public class ProceedToBooking extends AppCompatActivity implements AdapterView.O
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String regno, details, date;
+                String regno = e1.getText().toString().trim();
+                String details = e2.getText().toString().trim();
+                String date = e3.getText().toString().trim();
 
-                Toast.makeText(ProceedToBooking.this, "Ok", Toast.LENGTH_SHORT).show();
+                boolean isValid = true;
 
-                regno = e1.getText().toString();
-                details = e2.getText().toString();
-                date = e3.getText().toString();
+                if (regno.isEmpty()) {
+                    e1.setError("Registration number is required");
+                    isValid = false;
+                }
 
+                if (details.isEmpty()) {
+                    e2.setError("Details are required");
+                    isValid = false;
+                }
 
+                if (date.isEmpty()) {
+                    e3.setError("Please select a date");
+                    isValid = false;
+                }
+
+                if (service_type == null || service_type.isEmpty()) {
+                    Toast.makeText(ProceedToBooking.this, "Please select a service type", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }
+
+                if (vehicle_type == null || vehicle_type.isEmpty()) {
+                    Toast.makeText(ProceedToBooking.this, "Please select a vehicle type", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    return; // Don't proceed if any validation fails
+                }
+
+                // All validations passed, proceed to send request
                 RequestQueue queue = Volley.newRequestQueue(ProceedToBooking.this);
                 String url = "http://" + sh.getString("ip", "") + ":5000/book_service_center";
 
-                // Request a string response from the provided URL.
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the response string.
                         Log.d("+++++++++++++++++", response);
                         try {
                             JSONObject json = new JSONObject(response);
                             String res = json.getString("task");
-//                            Toast.makeText(Login.this, ""+response, Toast.LENGTH_SHORT).show();
 
                             if (res.equalsIgnoreCase("valid")) {
-
                                 Toast.makeText(ProceedToBooking.this, "Successfully Booked", Toast.LENGTH_SHORT).show();
 
                                 Intent location = new Intent(getApplicationContext(), Locationservice.class);
                                 startService(location);
-//
-                                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+
+                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(i);
-
-
                             } else {
-
                                 Toast.makeText(ProceedToBooking.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(ProceedToBooking.this, "JSON Error", Toast.LENGTH_SHORT).show();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
-
-                        Toast.makeText(getApplicationContext(), "Error" + error, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
                     @Override
                     protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, String> params = new HashMap<>();
                         params.put("regno", regno);
                         params.put("details", details);
                         params.put("date", date);
                         params.put("service_type", service_type);
                         params.put("vehicle_type", vehicle_type);
                         params.put("sid", getIntent().getStringExtra("sid"));
-                        params.put("lid", sh.getString("lid",""));
-
+                        params.put("lid", sh.getString("lid", ""));
                         return params;
                     }
                 };
+
                 queue.add(stringRequest);
-
-
             }
         });
 

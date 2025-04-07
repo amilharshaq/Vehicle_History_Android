@@ -1,88 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewBookings"
+    android:orientation="vertical"
     android:background="#FAFAFA"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".ViewBookings">
 
+    <!-- Header Row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="#E0E0E0"
+        android:layout_marginBottom="8dp"
+        android:elevation="2dp"
+        android:gravity="center_vertical">
 
-        <!-- Header Row -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:background="#E0E0E0"
-            android:layout_marginBottom="8dp"
-            android:elevation="2dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical">
+            android:text="Reg No"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_weight="1"
+            android:textSize="14sp"/>
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Reg No"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_weight="1"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Service Center"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_weight="1"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_weight="1"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Status"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:layout_weight="1"
-                android:textSize="14sp"/>
-        </LinearLayout>
-
-        <!-- List Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@android:color/white"
-            android:elevation="1dp"
-            android:padding="4dp">
+            android:text="Service Center"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_weight="1"
+            android:textSize="14sp"/>
 
-            <ListView
-                android:id="@+id/lst3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="#BDBDBD"
-                android:dividerHeight="1dp"
-                android:background="#FFFFFF"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_weight="1"
+            android:textSize="14sp"/>
 
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_weight="1"
+            android:textSize="14sp"/>
     </LinearLayout>
-</ScrollView>
+
+    <!-- List Section -->
+    <ListView
+        android:id="@+id/lst3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#BDBDBD"
+        android:dividerHeight="1dp"
+        android:background="#FFFFFF"
+        android:padding="4dp"/>
+
+</LinearLayout>
