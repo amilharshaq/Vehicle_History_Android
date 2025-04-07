@@ -127,83 +127,92 @@ public class ViewBookings extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+        String booking_id = bid.get(i);
+        String stts = status.get(i);
 
-        AlertDialog.Builder ald = new AlertDialog.Builder(ViewBookings.this);
-        ald.setTitle("Do You Want To Cancel Booking ?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+        if (stts.equalsIgnoreCase("accepted"))
+        {
+            Toast.makeText(this, "Booking accepted by service center, Cant Cancel The Booking", Toast.LENGTH_SHORT).show();
+        }
+
+        else {
 
 
+            AlertDialog.Builder ald = new AlertDialog.Builder(ViewBookings.this);
+            ald.setTitle("Do You Want To Cancel Booking ?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                        RequestQueue queue = Volley.newRequestQueue(ViewBookings.this);
-                        String url = "http://" + sh.getString("ip", "") + ":5000/cancel_booking";
 
-                        // Request a string response from the provided URL.
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                // Display the response string.
-                                Log.d("+++++++++++++++++", response);
-                                try {
-                                    JSONObject json = new JSONObject(response);
-                                    String res = json.getString("task");
+                            RequestQueue queue = Volley.newRequestQueue(ViewBookings.this);
+                            String url = "http://" + sh.getString("ip", "") + ":5000/cancel_booking";
+
+                            // Request a string response from the provided URL.
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // Display the response string.
+                                    Log.d("+++++++++++++++++", response);
+                                    try {
+                                        JSONObject json = new JSONObject(response);
+                                        String res = json.getString("task");
 //                            Toast.makeText(Login.this, ""+response, Toast.LENGTH_SHORT).show();
 
-                                    if (res.equalsIgnoreCase("success")) {
+                                        if (res.equalsIgnoreCase("success")) {
 
-                                        Toast.makeText(ViewBookings.this, "Booking Cancelled", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ViewBookings.this, "Booking Cancelled", Toast.LENGTH_SHORT).show();
 
 //
-                                        Intent i = new Intent(getApplicationContext(),ViewBookings.class);
-                                        startActivity(i);
+                                            Intent i = new Intent(getApplicationContext(), ViewBookings.class);
+                                            startActivity(i);
 
 
-                                    } else {
+                                        } else {
 
-                                        Toast.makeText(ViewBookings.this, "Error", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ViewBookings.this, "Error", Toast.LENGTH_SHORT).show();
 
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+
+
                                 }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 
 
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getApplicationContext(), "Error" + error, Toast.LENGTH_LONG).show();
+                                }
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("bid", booking_id);
+
+                                    return params;
+                                }
+                            };
+                            queue.add(stringRequest);
 
 
-                                Toast.makeText(getApplicationContext(), "Error" + error, Toast.LENGTH_LONG).show();
-                            }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("details", bid.get(i));
-
-                                return params;
-                            }
-                        };
-                        queue.add(stringRequest);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
 
-
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
 
 
-
-                    }
-                });
-
-        AlertDialog al = ald.create();
-        al.show();;
-
+            AlertDialog al = ald.create();
+            al.show();
+            ;
+        }
     }
 
     @Override
